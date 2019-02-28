@@ -61,11 +61,14 @@ public class RecordReaderUtils {
   }
 
   public static Object convertToDataType(String token, FieldSpec fieldSpec) {
-    if ((token == null) || token.isEmpty()) {
+    if (token == null) {
       return fieldSpec.getDefaultNullValue();
     }
-
     DataType dataType = fieldSpec.getDataType();
+    // Allow empty string for STRING data type
+    if (token.isEmpty() && dataType != DataType.STRING) {
+      return fieldSpec.getDefaultNullValue();
+    }
     switch (dataType) {
       case INT:
         return Integer.parseInt(token);
