@@ -586,13 +586,11 @@ public class ControllerConf extends PropertiesConfiguration {
     return ControllerPeriodicTasksConf.getRandomInitialDelayInSeconds();
   }
 
-  public void setControllerMode(String controllerMode) {
-    if (controllerMode != null) {
-      setProperty(CONTROLLER_MODE, controllerMode);
-    }
+  public void setControllerMode(HelixSetupUtils.ControllerMode controllerMode) {
+    setProperty(CONTROLLER_MODE, controllerMode.name());
   }
 
-  public String getControllerMode() {
-    return getString(CONTROLLER_MODE, DEFAULT_CONTROLLER_MODE);
+  public HelixSetupUtils.ControllerMode getControllerMode() {
+    return HelixSetupUtils.ControllerMode.getMode(getString(CONTROLLER_MODE, DEFAULT_CONTROLLER_MODE));
   }
 }

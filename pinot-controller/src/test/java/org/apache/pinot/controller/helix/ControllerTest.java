@@ -145,14 +145,17 @@ public abstract class ControllerTest {
 
     startControllerStarter(config);
 
-    _helixManager = _helixResourceManager.getHelixZkManager();
-    _helixAdmin = _helixResourceManager.getHelixAdmin();
-    _propertyStore = _helixResourceManager.getPropertyStore();
+    if (_helixResourceManager != null) {
+      _helixManager = _helixResourceManager.getHelixZkManager();
+      _helixAdmin = _helixResourceManager.getHelixAdmin();
+      _propertyStore = _helixResourceManager.getPropertyStore();
+    }
   }
 
   protected void startControllerStarter(ControllerConf config) {
     _controllerStarter = new TestOnlyControllerStarter(config);
     _controllerStarter.start();
+    _helixManager = _controllerStarter.getHelixZkManager();
     _helixResourceManager = _controllerStarter.getHelixResourceManager();
   }
 
